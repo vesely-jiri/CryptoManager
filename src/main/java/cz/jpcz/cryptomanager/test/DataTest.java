@@ -1,7 +1,6 @@
 package cz.jpcz.cryptomanager.test;
 
 import cz.jpcz.cryptomanager.model.Crypto;
-import cz.jpcz.cryptomanager.model.CryptoPortfolio;
 import cz.jpcz.cryptomanager.util.ConsoleColor;
 import cz.jpcz.cryptomanager.util.DebugManager;
 
@@ -10,10 +9,8 @@ import java.util.List;
 
 public class DataTest {
     public static void run() {
-
         DebugManager.setDebug(true);
         DebugManager.print(ConsoleColor.PURPLE + "Running DataTest");
-
     }
 
     public static List<Crypto> getSampleCryptoPortfolio() {
