@@ -33,3 +33,4 @@ bin/
 !.idea/modules.xml
 !.idea/runConfigurations/
 target
+*.~
