@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/crypto")
 public class CryptoPortfolioController {
 
     private final CryptoPortfolioService cryptoPortfolioService;
@@ -27,7 +26,7 @@ public class CryptoPortfolioController {
     }
 
     @GetMapping("/cryptos/{id}")
-    public String getCrypto(int id) {
+    public String getCrypto(@PathVariable int id) {
         try {
             return cryptoPortfolioService.getCrypto(id).toString();
         } catch (CryptoNotFoundException e) {

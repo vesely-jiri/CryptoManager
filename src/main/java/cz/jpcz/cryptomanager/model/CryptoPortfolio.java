@@ -1,6 +1,7 @@
 package cz.jpcz.cryptomanager.model;
 
 import cz.jpcz.cryptomanager.exception.CryptoNotFoundException;
+import cz.jpcz.cryptomanager.test.DataTest;
 import cz.jpcz.cryptomanager.util.ConsoleColor;
 import cz.jpcz.cryptomanager.util.DebugManager;
 
@@ -12,7 +13,11 @@ public class CryptoPortfolio {
 
     List<Crypto> portfolio = new ArrayList<>();
 
-    public CryptoPortfolio() {}
+    public CryptoPortfolio() {
+        if (DebugManager.isDebug()) {
+            this.portfolio = DataTest.getSampleCryptoPortfolio();
+        };
+    }
     public CryptoPortfolio(List<Crypto> cryptos) {
         portfolio.addAll(cryptos);
     }
