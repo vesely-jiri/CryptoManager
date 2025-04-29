@@ -14,4 +14,4 @@ Java 23
 Standard Java libraries
 
 ## Developer Notes
-Console output is colorized using ConsoleColorg
+Console output is colorized using ConsoleColor
