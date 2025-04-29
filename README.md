@@ -14,6 +14,4 @@ Java 23
 Standard Java libraries
 
 ## Developer Notes
-Console output is colorized using ConsoleColor
-
-Test data is stored in simple .txt files
+Console output is colorized using ConsoleColorg
