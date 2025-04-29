@@ -22,25 +22,6 @@ public class CryptoPortfolioController {
         this.cryptoPortfolioService = cryptoPortfolioService;
     }
 
-    @PostMapping("/cryptos")
-    public ResponseEntity<String> addCrypto(@RequestBody Crypto crypto) {
-        List<String> missingFields = new ArrayList<>();
-        if (crypto.getName() == null) missingFields.add("name");
-        if (crypto.getSymbol() == null) missingFields.add("symbol");
-        if (crypto.getPrice() == null) missingFields.add("price");
-        if (crypto.getQuantity() == null) missingFields.add("quantity");
-        if (!missingFields.isEmpty()) {
-            String message = "Missing required fields: " + String.join(", ", missingFields);
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(message);
-        }
-        cryptoPortfolioService.addCrypto(crypto);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body("Created new crypto");
-    }
-
     @GetMapping("/cryptos/{id}")
     public ResponseEntity<?> getCrypto(@PathVariable int id) {
         try {
@@ -65,5 +46,41 @@ public class CryptoPortfolioController {
                     .status(HttpStatus.BAD_REQUEST)
                     .body(e.getMessage());
         }
+    }
+
+    @PostMapping("/cryptos")
+    public ResponseEntity<String> addCrypto(@RequestBody Crypto crypto) {
+        List<String> missingFields = new ArrayList<>();
+        if (crypto.getName() == null) missingFields.add("name");
+        if (crypto.getSymbol() == null) missingFields.add("symbol");
+        if (crypto.getPrice() == null) missingFields.add("price");
+        if (crypto.getQuantity() == null) missingFields.add("quantity");
+        if (!missingFields.isEmpty()) {
+            String message = "Missing required fields: " + String.join(", ", missingFields);
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(message);
+        }
+        cryptoPortfolioService.addCrypto(crypto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body("Created new crypto");
+    }
+
+    @PutMapping("/cryptos/{id}")
+    public ResponseEntity<String> updateCrypto(@PathVariable int id, @RequestBody Crypto crypto) {
+        try {
+            cryptoPortfolioService.updateCrypto(id, crypto);
+            return ResponseEntity.ok("Updated crypto with id " + id);
+        } catch (CryptoNotFoundException e) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Crypto with id " + id + " not found");
+        }
+    }
+
+    @GetMapping("/portfolio-value")
+    public ResponseEntity<String> getPortfolioValue() {
+        return ResponseEntity.ok("Portfolio value: " + cryptoPortfolioService.getPortfolioValue());
     }
 }

@@ -22,6 +22,10 @@ public class CryptoPortfolioService {
         return crypto;
     }
 
+    public void updateCrypto(int id, Crypto crypto) {
+        portfolio.update(id, crypto);
+    }
+
     public void addCrypto(Crypto crypto) {
         portfolio.add(crypto);
     }
@@ -36,5 +40,9 @@ public class CryptoPortfolioService {
 
     public void listAllCryptos() {
         portfolio.listAll();
+    }
+
+    public double getPortfolioValue() {
+        return portfolio.getPortfolioValue();
     }
 }
