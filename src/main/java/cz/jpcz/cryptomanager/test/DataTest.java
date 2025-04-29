@@ -14,7 +14,7 @@ public class DataTest {
     }
 
     public static List<Crypto> getSampleCryptoPortfolio() {
-        DebugManager.print(ConsoleColor.BLUE + "Creating sample crypto portfolio");
+        DebugManager.printHeader("Creating sample crypto portfolio");
         List<Crypto> portfolio = new ArrayList<>();
         portfolio.add(new Crypto(1, "Bitcoin", "BTC", 1000.0, 1.0));
         portfolio.add(new Crypto(2, "Ethereum", "ETH", 500.0, 1.0));

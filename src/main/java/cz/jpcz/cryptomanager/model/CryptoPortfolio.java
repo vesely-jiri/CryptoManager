@@ -1,6 +1,5 @@
 package cz.jpcz.cryptomanager.model;
 
-import cz.jpcz.cryptomanager.exception.CryptoNotFoundException;
 import cz.jpcz.cryptomanager.test.DataTest;
 import cz.jpcz.cryptomanager.util.ConsoleColor;
 import cz.jpcz.cryptomanager.util.DebugManager;

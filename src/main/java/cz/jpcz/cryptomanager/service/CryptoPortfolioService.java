@@ -5,7 +5,6 @@ import cz.jpcz.cryptomanager.model.Crypto;
 import cz.jpcz.cryptomanager.model.CryptoPortfolio;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Service
