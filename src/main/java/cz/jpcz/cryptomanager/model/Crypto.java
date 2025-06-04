@@ -1,7 +1,5 @@
 package cz.jpcz.cryptomanager.model;
 
-import cz.jpcz.cryptomanager.util.ConsoleColor;
-import cz.jpcz.cryptomanager.util.DebugManager;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -15,13 +13,10 @@ public class Crypto implements Comparable<Crypto> {
     private Integer id;
     private String name;
     private String symbol;
-    //BigDecimals?
     private Double price;
     private Double quantity;
 
     public Crypto(Integer id, String name, String symbol, Double price, Double quantity) {
-        DebugManager.print(ConsoleColor.BLUE + "Crypto created with id " + id +
-                ", name " + name + ", symbol " + symbol + ", price " + price + ", quantity " + quantity);
         this.id = id;
         this.name = name;
         this.symbol = symbol;
@@ -73,6 +68,6 @@ public class Crypto implements Comparable<Crypto> {
 
     @Override
     public int compareTo(Crypto crypto) {
-        return this.name.compareTo(crypto.name);
+        return name.compareTo(crypto.getName());
     }
 }
