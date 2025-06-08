@@ -1,7 +1,11 @@
 package cz.jpcz.cryptomanager.controller;
 
+import cz.jpcz.cryptomanager.dto.CryptoRequestDTO;
+import cz.jpcz.cryptomanager.dto.CryptoResponseDTO;
+import cz.jpcz.cryptomanager.mapper.CryptoMapper;
 import cz.jpcz.cryptomanager.model.Crypto;
 import cz.jpcz.cryptomanager.service.CryptoPortfolioService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,48 +27,42 @@ public class CryptoPortfolioController {
     }
 
     @GetMapping("/cryptos/{id}")
-    public ResponseEntity<?> getCrypto(@PathVariable int id) {
+    public ResponseEntity<CryptoResponseDTO> getCrypto(@PathVariable int id) {
         log.info("Getting crypto with id {}", id);
         Crypto crypto = cryptoPortfolioService.getCrypto(id);
-        return ResponseEntity.ok(crypto);
+        CryptoResponseDTO response = CryptoMapper.toResponseDTO(crypto);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/cryptos")
-    public ResponseEntity<?> getCryptos(@RequestParam(value = "sort", required = false) String sortBy) {
+    public ResponseEntity<List<CryptoResponseDTO>> getCryptos(@RequestParam(value = "sort", required = false) String sortBy) {
         log.info("Getting all cryptos");
+        List<CryptoResponseDTO> response;
         if (sortBy == null) {
-            return ResponseEntity.ok(cryptoPortfolioService.getAllCryptos());
+            response = CryptoMapper.toResponseDTO(cryptoPortfolioService.getAllCryptos());
+        } else {
+            response = CryptoMapper.toResponseDTO(cryptoPortfolioService.getSortedCryptos(sortBy));
         }
-        return ResponseEntity.ok(cryptoPortfolioService.getSortedCryptos(sortBy));
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/cryptos")
-    public ResponseEntity<String> addCrypto(@RequestBody Crypto crypto) {
-        log.info("Adding crypto: {}", crypto);
-        List<String> missingFields = new ArrayList<>();
-        if (crypto.getName() == null) missingFields.add("name");
-        if (crypto.getSymbol() == null) missingFields.add("symbol");
-        if (crypto.getPrice() == null) missingFields.add("price");
-        if (crypto.getQuantity() == null) missingFields.add("quantity");
-        if (!missingFields.isEmpty()) {
-            String message = "Missing required fields: " + String.join(", ", missingFields);
-            log.error(message);
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body(message);
-        }
-        cryptoPortfolioService.addCrypto(crypto);
-        log.info("Added new crypto: {}", crypto);
+    public ResponseEntity<CryptoResponseDTO> addCrypto(@RequestBody @Valid CryptoRequestDTO request) {
+        log.info("Adding crypto: {}", request);
+        Crypto created = cryptoPortfolioService.addCrypto(CryptoMapper.toEntity(request));
+        log.info("Added new crypto: {}", request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body("Created new crypto");
+                .body(CryptoMapper.toResponseDTO(created));
     }
 
     @PutMapping("/cryptos/{id}")
-    public ResponseEntity<String> updateCrypto(@PathVariable int id, @RequestBody Crypto crypto) {
+    public ResponseEntity<CryptoResponseDTO> updateCrypto(@PathVariable int id,
+                                               @RequestBody @Valid CryptoRequestDTO request) {
         log.info("Updating crypto with id {}", id);
-        cryptoPortfolioService.updateCrypto(id, crypto);
-        return ResponseEntity.ok("Updated crypto with id " + id);
+        Crypto updated = cryptoPortfolioService.updateCrypto(id, request);
+        CryptoResponseDTO response = CryptoMapper.toResponseDTO(updated);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/portfolio-value")

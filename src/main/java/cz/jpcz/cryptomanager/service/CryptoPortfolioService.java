@@ -1,5 +1,6 @@
 package cz.jpcz.cryptomanager.service;
 
+import cz.jpcz.cryptomanager.dto.CryptoRequestDTO;
 import cz.jpcz.cryptomanager.exception.CryptoNotFoundException;
 import cz.jpcz.cryptomanager.model.Crypto;
 import cz.jpcz.cryptomanager.repository.CryptoRepository;
@@ -21,7 +22,7 @@ public class CryptoPortfolioService {
         this.repository = repository;
     }
 
-    public Crypto updateCrypto(int id, Crypto updated) {
+    public Crypto updateCrypto(int id, CryptoRequestDTO updated) {
         log.info("Updating crypto with id {}", id);
         for (Crypto crypto : repository.findAll()) {
             if (crypto.getId() == id) {
@@ -34,13 +35,13 @@ public class CryptoPortfolioService {
         }
         throw new CryptoNotFoundException("Crypto with id " + id + " not found");
     }
-    public void addCrypto(Crypto crypto) {
+    public Crypto addCrypto(Crypto crypto) {
         log.info("Adding crypto: {}", crypto);
-        repository.save(crypto);
+        return repository.save(crypto);
     }
-    public void addCryptos(List<Crypto> cryptos) {
+    public List<Crypto> addCryptos(List<Crypto> cryptos) {
         log.info("Adding cryptos: {}", cryptos);
-        repository.saveAll(cryptos);
+        return repository.saveAll(cryptos);
     }
 
     public Crypto getCrypto(int id) {
