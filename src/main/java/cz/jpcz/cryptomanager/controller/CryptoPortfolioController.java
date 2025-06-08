@@ -12,44 +12,42 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @RestController
 public class CryptoPortfolioController {
 
-    private final CryptoPortfolioService cryptoPortfolioService;
+    private final CryptoPortfolioService service;
 
     @Autowired
     public CryptoPortfolioController(CryptoPortfolioService cryptoPortfolioService) {
-        this.cryptoPortfolioService = cryptoPortfolioService;
+        this.service = cryptoPortfolioService;
     }
 
     @GetMapping("/cryptos/{id}")
     public ResponseEntity<CryptoResponseDTO> getCrypto(@PathVariable int id) {
         log.info("Getting crypto with id {}", id);
-        Crypto crypto = cryptoPortfolioService.getCrypto(id);
+        Crypto crypto = service.getCrypto(id);
         CryptoResponseDTO response = CryptoMapper.toResponseDTO(crypto);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/cryptos")
-    public ResponseEntity<List<CryptoResponseDTO>> getCryptos(@RequestParam(value = "sort", required = false) String sortBy) {
-        log.info("Getting all cryptos");
-        List<CryptoResponseDTO> response;
-        if (sortBy == null) {
-            response = CryptoMapper.toResponseDTO(cryptoPortfolioService.getAllCryptos());
-        } else {
-            response = CryptoMapper.toResponseDTO(cryptoPortfolioService.getSortedCryptos(sortBy));
-        }
+    public ResponseEntity<List<CryptoResponseDTO>> getCryptos(
+            @RequestParam(value = "sort", required = false) String sortBy) {
+        log.info("Getting all cryptos{}", sortBy != null ? " sorted by " + sortBy : "");
+        List<Crypto> cryptos = sortBy == null
+                ? service.getAllCryptos()
+                : service.getSortedCryptos(sortBy);
+        List<CryptoResponseDTO> response = CryptoMapper.toResponseDTO(cryptos);
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/cryptos")
     public ResponseEntity<CryptoResponseDTO> addCrypto(@RequestBody @Valid CryptoRequestDTO request) {
         log.info("Adding crypto: {}", request);
-        Crypto created = cryptoPortfolioService.addCrypto(CryptoMapper.toEntity(request));
+        Crypto created = service.addCrypto(CryptoMapper.toEntity(request));
         log.info("Added new crypto: {}", request);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -60,7 +58,7 @@ public class CryptoPortfolioController {
     public ResponseEntity<CryptoResponseDTO> updateCrypto(@PathVariable int id,
                                                @RequestBody @Valid CryptoRequestDTO request) {
         log.info("Updating crypto with id {}", id);
-        Crypto updated = cryptoPortfolioService.updateCrypto(id, request);
+        Crypto updated = service.updateCrypto(id, request);
         CryptoResponseDTO response = CryptoMapper.toResponseDTO(updated);
         return ResponseEntity.ok(response);
     }
@@ -68,6 +66,6 @@ public class CryptoPortfolioController {
     @GetMapping("/portfolio-value")
     public ResponseEntity<String> getPortfolioValue() {
         log.info("Getting portfolio value");
-        return ResponseEntity.ok("Portfolio value: " + cryptoPortfolioService.getPortfolioValue());
+        return ResponseEntity.ok("Portfolio value: " + service.getPortfolioValue());
     }
 }
