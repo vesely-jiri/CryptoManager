@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @WebMvcTest(CryptoPortfolioController.class)
@@ -28,9 +29,9 @@ public class CryptoPortfolioControllerTest {
     @Test
     void shouldReturnCryptoList() throws Exception {
         List<Crypto> data = List.of(
-                new Crypto(1, "Bitcoin", "BTC", 1000.0, 10.0),
-                new Crypto(2, "Ethereum", "ETH", 2000.0, 20.0),
-                new Crypto(3, "Ripple", "XRP", 3000.0, 30.0));
+                new Crypto(1, "Bitcoin", "BTC", BigDecimal.valueOf(1000.0), 10.0),
+                new Crypto(2, "Ethereum", "ETH", BigDecimal.valueOf(2000.0), 20.0),
+                new Crypto(3, "Ripple", "XRP", BigDecimal.valueOf(3000.0), 30.0));
         Mockito.when(service.getAllCryptos()).thenReturn(data);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/cryptos"))
@@ -44,7 +45,7 @@ public class CryptoPortfolioControllerTest {
     @DisplayName("Should return portfolio value using service.getPortfolioValue()")
     @Test
     void shouldReturnPortfolioValue() throws Exception {
-        Mockito.when(service.getPortfolioValue()).thenReturn(17000.0);
+        Mockito.when(service.getPortfolioValue()).thenReturn(BigDecimal.valueOf(17000.0));
 
         mockMvc.perform(MockMvcRequestBuilders.get("/portfolio-value"))
                 .andExpect(MockMvcResultMatchers.status().isOk())

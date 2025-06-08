@@ -43,21 +43,10 @@ public class CryptoPortfolio {
             }
         } return null;
     }
-    public double getPortfolioValue() {
-        double value = 0.0;
-        for (Crypto crypto : cryptos) {
-            value += crypto.getPrice() * crypto.getQuantity();
-        }
-        return value;
-    }
 
     public List<Crypto> getSorted(Comparator<Crypto> comparator) {
         ArrayList<Crypto> sorted = new ArrayList<>(cryptos);
         sorted.sort(comparator);
         return sorted;
-    }
-    public List<Crypto> getSorted(String sortBy) {
-        Comparator<Crypto> comparator = CryptoComparators.getComparator(sortBy);
-        return getSorted(comparator);
     }
 }
