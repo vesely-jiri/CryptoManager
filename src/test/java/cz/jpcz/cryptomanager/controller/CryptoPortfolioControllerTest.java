@@ -3,6 +3,7 @@ package cz.jpcz.cryptomanager.controller;
 import cz.jpcz.cryptomanager.exception.CryptoNotFoundException;
 import cz.jpcz.cryptomanager.model.Crypto;
 import cz.jpcz.cryptomanager.service.CryptoPortfolioService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ public class CryptoPortfolioControllerTest {
     @MockBean
     private CryptoPortfolioService service;
 
+    @DisplayName("Should return crypto list using service.getAllCryptos()")
     @Test
     void shouldReturnCryptoList() throws Exception {
         List<Crypto> data = List.of(
@@ -39,6 +41,7 @@ public class CryptoPortfolioControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[2].symbol").value("XRP"));
     }
 
+    @DisplayName("Should return portfolio value using service.getPortfolioValue()")
     @Test
     void shouldReturnPortfolioValue() throws Exception {
         Mockito.when(service.getPortfolioValue()).thenReturn(17000.0);
@@ -48,6 +51,7 @@ public class CryptoPortfolioControllerTest {
                 .andExpect(MockMvcResultMatchers.content().string("Portfolio value: 17000.0"));
     }
 
+    @DisplayName("Should return 404 when crypto with id 999 not found")
     @Test
     void shouldReturn404() throws Exception {
         int id = 999;
