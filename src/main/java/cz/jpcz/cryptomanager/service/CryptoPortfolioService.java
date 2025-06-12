@@ -26,16 +26,18 @@ public class CryptoPortfolioService {
 
     public Crypto updateCrypto(int id, CryptoRequestDTO updated) {
         log.info("Updating crypto with id {}", id);
-        for (Crypto crypto : repository.findAll()) {
-            if (crypto.getId() == id) {
-                crypto.setName(updated.getName());
-                crypto.setSymbol(updated.getSymbol());
-                crypto.setPrice(updated.getPrice());
-                crypto.setQuantity(updated.getQuantity());
-                return crypto;
-            }
+        Crypto crypto = repository.findById(id)
+                .orElseThrow(() -> new CryptoNotFoundException("Crypto with id " + id + " not found"));
+
+        Optional<Crypto> symbolExists = repository.findBySymbol(updated.getSymbol());
+        if (symbolExists.isPresent() && !symbolExists.get().getId().equals(id)) {
+            throw new CryptoAlreadyExistsException("Crypto with symbol " + updated.getSymbol() + " already exists");
         }
-        throw new CryptoNotFoundException("Crypto with id " + id + " not found");
+        crypto.setName(updated.getName());
+        crypto.setSymbol(updated.getSymbol());
+        crypto.setPrice(updated.getPrice());
+        crypto.setQuantity(updated.getQuantity());
+        return repository.save(crypto);
     }
     public Crypto addCrypto(Crypto crypto) {
         log.info("Adding crypto: {}", crypto);

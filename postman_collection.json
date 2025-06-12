@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"id\": 1,\r\n  \"name\": \"Bitcoin5\",\r\n  \"symbol\": \"BTC\",\r\n  \"price\": 650000,\r\n  \"quantity\": 1\r\n}",
+					"raw": "{\r\n  \"id\": 1,\r\n  \"name\": \"Bitcoin\",\r\n  \"symbol\": \"BTC\",\r\n  \"price\": 650000,\r\n  \"quantity\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -272,7 +272,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Bitcoin5\",\r\n  \"symbol\": \"BTC\",\r\n  \"price\": 650000,\r\n  \"quantity\": 1\r\n}",
+					"raw": "{\r\n  \"name\": \"Bitcoin5\",\r\n  \"symbol\": \"BTC5\",\r\n  \"price\": 650000,\r\n  \"quantity\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
