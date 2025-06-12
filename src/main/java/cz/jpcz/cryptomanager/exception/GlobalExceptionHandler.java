@@ -31,6 +31,14 @@ public class GlobalExceptionHandler {
                 .body(e.getMessage());
     }
 
+    @ExceptionHandler(CryptoAlreadyExistsException.class)
+    public ResponseEntity<String> handleCryptoAlreadyExistsException(CryptoAlreadyExistsException e) {
+        log.error("Crypto already exists", e);
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(e.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();

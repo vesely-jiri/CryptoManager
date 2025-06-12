@@ -1,6 +1,7 @@
 package cz.jpcz.cryptomanager.service;
 
 import cz.jpcz.cryptomanager.dto.CryptoRequestDTO;
+import cz.jpcz.cryptomanager.exception.CryptoAlreadyExistsException;
 import cz.jpcz.cryptomanager.exception.CryptoNotFoundException;
 import cz.jpcz.cryptomanager.model.Crypto;
 import cz.jpcz.cryptomanager.repository.CryptoRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -37,6 +39,8 @@ public class CryptoPortfolioService {
     }
     public Crypto addCrypto(Crypto crypto) {
         log.info("Adding crypto: {}", crypto);
+        Optional<Crypto> existing = repository.findBySymbol(crypto.getSymbol());
+        if (existing.isPresent()) throw new CryptoAlreadyExistsException("Crypto with symbol " + crypto.getSymbol() + " already exists");
         return repository.save(crypto);
     }
     public List<Crypto> addCryptos(List<Crypto> cryptos) {
