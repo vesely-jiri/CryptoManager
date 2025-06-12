@@ -34,3 +34,4 @@ bin/
 !.idea/runConfigurations/
 target
 *.~
+*.iml
