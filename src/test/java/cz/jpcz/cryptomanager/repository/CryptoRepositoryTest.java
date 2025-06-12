@@ -1,6 +1,6 @@
 package cz.jpcz.cryptomanager.repository;
 
-import cz.jpcz.cryptomanager.model.Crypto;
+import cz.jpcz.cryptomanager.entity.Crypto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

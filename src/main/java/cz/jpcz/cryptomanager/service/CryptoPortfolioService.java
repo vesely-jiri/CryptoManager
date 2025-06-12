@@ -3,7 +3,7 @@ package cz.jpcz.cryptomanager.service;
 import cz.jpcz.cryptomanager.dto.CryptoRequestDTO;
 import cz.jpcz.cryptomanager.exception.CryptoAlreadyExistsException;
 import cz.jpcz.cryptomanager.exception.CryptoNotFoundException;
-import cz.jpcz.cryptomanager.model.Crypto;
+import cz.jpcz.cryptomanager.entity.Crypto;
 import cz.jpcz.cryptomanager.repository.CryptoRepository;
 import lombok.extern.slf4j.Slf4j;
 

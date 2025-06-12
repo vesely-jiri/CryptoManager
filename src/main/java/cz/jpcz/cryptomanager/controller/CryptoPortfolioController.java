@@ -3,7 +3,7 @@ package cz.jpcz.cryptomanager.controller;
 import cz.jpcz.cryptomanager.dto.CryptoRequestDTO;
 import cz.jpcz.cryptomanager.dto.CryptoResponseDTO;
 import cz.jpcz.cryptomanager.mapper.CryptoMapper;
-import cz.jpcz.cryptomanager.model.Crypto;
+import cz.jpcz.cryptomanager.entity.Crypto;
 import cz.jpcz.cryptomanager.service.CryptoPortfolioService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;

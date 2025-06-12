@@ -2,7 +2,7 @@ package cz.jpcz.cryptomanager.mapper;
 
 import cz.jpcz.cryptomanager.dto.CryptoRequestDTO;
 import cz.jpcz.cryptomanager.dto.CryptoResponseDTO;
-import cz.jpcz.cryptomanager.model.Crypto;
+import cz.jpcz.cryptomanager.entity.Crypto;
 
 import java.util.List;
 

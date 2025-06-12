@@ -1,7 +1,7 @@
 package cz.jpcz.cryptomanager.controller;
 
 import cz.jpcz.cryptomanager.exception.CryptoNotFoundException;
-import cz.jpcz.cryptomanager.model.Crypto;
+import cz.jpcz.cryptomanager.entity.Crypto;
 import cz.jpcz.cryptomanager.service.CryptoPortfolioService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

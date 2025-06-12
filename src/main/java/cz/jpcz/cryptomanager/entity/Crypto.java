@@ -1,4 +1,4 @@
-package cz.jpcz.cryptomanager.model;
+package cz.jpcz.cryptomanager.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
