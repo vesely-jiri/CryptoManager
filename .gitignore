@@ -30,8 +30,6 @@ bin/
 ###----------------------------------------------------------------------
 #User defined patterns
 .idea/*
-!.idea/modules.xml
-!.idea/runConfigurations/
 target
 *.~
 *.iml
